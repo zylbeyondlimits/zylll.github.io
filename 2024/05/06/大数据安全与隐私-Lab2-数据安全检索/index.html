@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>大数据安全与隐私 - Lab2 - 数据安全检索 - Hexo</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Hexo"><meta name="msapplication-TileImage" content="https://s1.imagehub.cc/images/2023/10/19/Photographer.jpeg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hexo"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《大数据安全与隐私》课程的实验二，通过 PCL 库中的 K-D Tree，实现二维数据上的安全近邻检索。"><meta property="og:type" content="blog"><meta property="og:title" content="大数据安全与隐私 - Lab2 - 数据安全检索"><meta property="og:url" content="http://example.com/2024/05/06/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81-Lab2-%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%A3%80%E7%B4%A2/"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="《大数据安全与隐私》课程的实验二，通过 PCL 库中的 K-D Tree，实现二维数据上的安全近邻检索。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/img/og_image.png"><meta property="article:published_time" content="2024-05-06T06:15:55.000Z"><meta property="article:modified_time" content="2024-05-14T03:56:06.481Z"><meta property="article:author" content="Zylll"><meta property="article:tag" content="网络安全"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://example.com/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2024/05/06/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81-Lab2-%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%A3%80%E7%B4%A2/"},"headline":"大数据安全与隐私 - Lab2 - 数据安全检索","image":["http://example.com/img/og_image.png"],"datePublished":"2024-05-06T06:15:55.000Z","dateModified":"2024-05-14T03:56:06.481Z","author":{"@type":"Person","name":"Zylll"},"publisher":{"@type":"Organization","name":"Hexo","logo":{"@type":"ImageObject","url":{"text":"Zylll's Blog"}}},"description":"《大数据安全与隐私》课程的实验二，通过 PCL 库中的 K-D Tree，实现二维数据上的安全近邻检索。"}</script><link rel="canonical" href="http://example.com/2024/05/06/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81-Lab2-%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%A3%80%E7%B4%A2/"><link rel="icon" href="https://s1.imagehub.cc/images/2023/10/19/Photographer.jpeg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Zylll&#039;s Blog</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" target="_blank" rel="noopener" href="https://zylbeyondlimits.github.io/2023/10/19/About%20me/">About Me</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-05-06T06:15:55.000Z" title="2024/5/6 14:15:55">2024-05-06</time>发表</span><span class="level-item"><time dateTime="2024-05-14T03:56:06.481Z" title="2024/5/14 11:56:06">2024-05-14</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E4%B8%93%E4%B8%9A%E7%9F%A5%E8%AF%86/">专业知识</a></span><span class="level-item">4 分钟读完 (大约649个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">大数据安全与隐私 - Lab2 - 数据安全检索</h1><div class="content"><h3 id="实验环境准备"><a href="#实验环境准备" class="headerlink" title="实验环境准备"></a>实验环境准备</h3><p>利用 <code>pcl</code> 库中的模块来实现 K-D Tree。</p>
+<ol>
+<li>安装 <code>pcl</code> 库。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install pcl</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>Cmake 相关配置。</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ./test</span><br><span class="line">touch CMakeLists.txt</span><br></pre></td></tr></table></figure>
+
+<p> CmakeLists.txt：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION 2.6 FATAL_ERROR) # 选择cmake版本</span><br><span class="line">project(PCLtest) # 给工程命名</span><br><span class="line">find_package(PCL REQUIRED) </span><br><span class="line">include_directories($&#123;PCL_INCLUDE_DIRS&#125;)</span><br><span class="line">link_directories($&#123;PCL_LIBRARY_DIRS&#125;)</span><br><span class="line">add_definitions($&#123;PCL_DEFINITIONS&#125;)</span><br><span class="line">add_executable(PCLtest main.cpp)</span><br><span class="line">target_link_libraries(PCLtest $&#123;PCL_LIBRARIES&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>test：</p>
+</li>
+</ol>
+<p>main.cpp: 实验源代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir build &amp;&amp; cd ./build</span><br><span class="line">cmake ..</span><br><span class="line">make</span><br><span class="line">./PCLtest</span><br></pre></td></tr></table></figure>
+
+<h3 id="安全查询的实现：保序加密（分段映射）"><a href="#安全查询的实现：保序加密（分段映射）" class="headerlink" title="安全查询的实现：保序加密（分段映射）"></a>安全查询的实现：保序加密（分段映射）</h3><ol>
+<li><p>定点数转换：将小数转换为定点数。为了保留小数点后的6位精度，代码将原始的浮点数乘以1e6，将其转化为整数。这样可以确保在段内的随机化不会造成显著的精度损失。同时，分段数目也影响着精度。</p>
+</li>
+<li><p>分段计算：计算原始整数值所属的分段。分段是基于整数值与分段大小的比率计算的。</p>
+</li>
+<li><p>随机化：在分段内加入随机偏移，增加保序加密的安全性。这样，虽然数据的顺序保持，但值本身有一定的随机性。因为随机偏移的原因，解密的值和加密前的值可能略有不同。这种保序加密通常用于需要顺序查询但同时又需要保持一定随机性和安全性的场景。本质是一种<strong>近似的安全查询</strong>。</p>
+</li>
+</ol>
+<h3 id="K-D-Tree"><a href="#K-D-Tree" class="headerlink" title="K-D Tree"></a>K-D Tree</h3><p>k-D Tree 是一种可以高效处理 $k$ 维空间信息的数据结构。可应用于多维空间数据的范围搜索和最近邻搜索。</p>
+<h4 id="最近邻搜索"><a href="#最近邻搜索" class="headerlink" title="最近邻搜索"></a>最近邻搜索</h4><p>由于 K-D Tree 的性质，通过二叉搜索可以很快找到最邻近的近似点，但最邻近肯定距离查询点更近，应该位于以查询点为圆心且通过叶子节点的圆域内。</p>
+<p>为了找到真正的最近邻需进行 <strong>回溯</strong> 操作：算法沿搜索路径反向查找是否有距离查询点更近的数据点。回溯的过程中，判断在该父节点的其他子节点空间中是否有距离查询点更近的数据点。</p>
+<p>即以<strong>查询点</strong>为<strong>圆心</strong>，以<strong>查询点到最邻近的近似点的距离</strong>为<strong>半径</strong>，画圆。若发现该圆并不和某平面相交，则代表不用进入该父节点的右子空间中去搜索。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>大数据安全与隐私 - Lab2 - 数据安全检索</p><p><a href="http://example.com/2024/05/06/大数据安全与隐私-Lab2-数据安全检索/">http://example.com/2024/05/06/大数据安全与隐私-Lab2-数据安全检索/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Zylll</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2024-05-06</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2024-05-14</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2024/11/13/About%20me/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">About me</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2024/04/05/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81-Lab1-%E7%8E%B0%E4%BB%A3%E5%AF%86%E7%A0%81%E5%AD%A6%E5%9F%BA%E7%A1%80%E6%8A%80%E8%83%BD/"><span class="level-item">大数据安全与隐私 - Lab1 - 现代密码学基础技能</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="https://s1.imagehub.cc/images/2024/11/12/bf93f90311c802220474e9bf8ff8b3d4.jpg" alt="Zylll"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Zylll</p><p class="is-size-6 is-block">sakamotocoda@gmail.com</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Xi&#039;an Jiaotong University</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">24</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">6</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">14</p></a></div></div></nav></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#实验环境准备"><span class="level-left"><span class="level-item">1</span><span class="level-item">实验环境准备</span></span></a></li><li><a class="level is-mobile" href="#安全查询的实现：保序加密（分段映射）"><span class="level-left"><span class="level-item">2</span><span class="level-item">安全查询的实现：保序加密（分段映射）</span></span></a></li><li><a class="level is-mobile" href="#K-D-Tree"><span class="level-left"><span class="level-item">3</span><span class="level-item">K-D Tree</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#最近邻搜索"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">最近邻搜索</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Zylll&#039;s Blog</a><p class="is-size-7"><span>&copy; 2024 Zylll</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">做一名万物学徒。</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mhchem.min.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

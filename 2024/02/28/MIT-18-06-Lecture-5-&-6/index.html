@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>MIT 18.06 - Lecture 5 &amp; 6 - Hexo</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Hexo"><meta name="msapplication-TileImage" content="https://s1.imagehub.cc/images/2023/10/19/Photographer.jpeg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hexo"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="MIT 18.06 线性代数第 5 讲与第 6 讲的学习笔记，介绍了向量空间、列空间、零空间的相关知识。"><meta property="og:type" content="blog"><meta property="og:title" content="MIT 18.06 - Lecture 5 &amp; 6"><meta property="og:url" content="http://example.com/2024/02/28/MIT-18-06-Lecture-5-&amp;-6/"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="MIT 18.06 线性代数第 5 讲与第 6 讲的学习笔记，介绍了向量空间、列空间、零空间的相关知识。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://s1.imagehub.cc/images/2024/02/28/64615f2b3c744d6b9a4328070344cc6e.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2024/02/28/2e3c67721382085e32c5b61c0fd4ff27.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2024/02/28/08ecc18b5ba8705258ae85f46cadad9e.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2024/02/28/2b9f60bab790993c531278f5b336eb71.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2024/03/01/8af21c4e589929452a05c9013b9f334a.png"><meta property="article:published_time" content="2024-02-28T02:49:56.000Z"><meta property="article:modified_time" content="2024-03-09T11:59:26.519Z"><meta property="article:author" content="Zylll"><meta property="article:tag" content="线性代数"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://s1.imagehub.cc/images/2024/02/28/64615f2b3c744d6b9a4328070344cc6e.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2024/02/28/MIT-18-06-Lecture-5-&-6/"},"headline":"MIT 18.06 - Lecture 5 & 6","image":["https://s1.imagehub.cc/images/2024/02/28/64615f2b3c744d6b9a4328070344cc6e.png","https://s1.imagehub.cc/images/2024/02/28/2e3c67721382085e32c5b61c0fd4ff27.png","https://s1.imagehub.cc/images/2024/02/28/08ecc18b5ba8705258ae85f46cadad9e.png","https://s1.imagehub.cc/images/2024/02/28/2b9f60bab790993c531278f5b336eb71.png","https://s1.imagehub.cc/images/2024/03/01/8af21c4e589929452a05c9013b9f334a.png"],"datePublished":"2024-02-28T02:49:56.000Z","dateModified":"2024-03-09T11:59:26.519Z","author":{"@type":"Person","name":"Zylll"},"publisher":{"@type":"Organization","name":"Hexo","logo":{"@type":"ImageObject","url":{"text":"Zylll's Blog"}}},"description":"MIT 18.06 线性代数第 5 讲与第 6 讲的学习笔记，介绍了向量空间、列空间、零空间的相关知识。"}</script><link rel="canonical" href="http://example.com/2024/02/28/MIT-18-06-Lecture-5-&amp;-6/"><link rel="icon" href="https://s1.imagehub.cc/images/2023/10/19/Photographer.jpeg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Zylll&#039;s Blog</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" target="_blank" rel="noopener" href="https://zylbeyondlimits.github.io/2023/10/19/About%20me/">About Me</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-02-28T02:49:56.000Z" title="2024/2/28 10:49:56">2024-02-28</time>发表</span><span class="level-item"><time dateTime="2024-03-09T11:59:26.519Z" title="2024/3/9 19:59:26">2024-03-09</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span><span class="level-item">3 分钟读完 (大约460个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">MIT 18.06 - Lecture 5 &amp; 6</h1><div class="content"><h4 id="置换矩阵（permutation）"><a href="#置换矩阵（permutation）" class="headerlink" title="置换矩阵（permutation）"></a>置换矩阵（permutation）</h4><p>$$<br>P ^ {-1} &#x3D; P ^ T \ P P ^ {-1} &#x3D; I<br>$$</p>
+<h4 id="转置（transposes）"><a href="#转置（transposes）" class="headerlink" title="转置（transposes）"></a>转置（transposes）</h4><p>$$<br>(A ^ T)<em>{ij} &#x3D; A</em>{ji}<br>$$</p>
+<h5 id="对称矩阵（symmetric-martix）"><a href="#对称矩阵（symmetric-martix）" class="headerlink" title="对称矩阵（symmetric martix）"></a>对称矩阵（symmetric martix）</h5><p>满足 $A ^ T &#x3D; A$ 的矩阵，称为对称矩阵。<br>构造对称矩阵的通用方法：$\forall A$（所有矩阵，不是方阵也可以），$A ^ TA$ 一定是一个对称矩阵。（$(A ^ TA) ^ T &#x3D; A ^ TA$）。</p>
+<h4 id="向量空间（vector-spaces）"><a href="#向量空间（vector-spaces）" class="headerlink" title="向量空间（vector spaces）"></a>向量空间（vector spaces）</h4><p>If a <strong>collection of vectors</strong> is <strong>closed</strong> under <strong>linear combinations</strong> (i.e. under addition and multiplication by any real numbers), and if multiplication and addition behave in a reasonable way , then we call that collection a <strong>vector space</strong>.</p>
+<h4 id="向量子空间（vector-subspaces）"><a href="#向量子空间（vector-subspaces）" class="headerlink" title="向量子空间（vector subspaces）"></a>向量子空间（vector subspaces）</h4><p>A vector space that is contained inside of another vector space is called a subspace of that space.</p>
+<p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/1oK9ks"><img src="https://s1.imagehub.cc/images/2024/02/28/64615f2b3c744d6b9a4328070344cc6e.png" alt="64615f2b3c744d6b9a4328070344cc6e.png"></a></p>
+<p>The union $P \cup L$ of those two subspaces <strong>is not a subspace</strong>, the intersection $S \cap T$ of those two subspaces <strong>is a subspace</strong>.</p>
+<h4 id="向量列空间（column-spaces）"><a href="#向量列空间（column-spaces）" class="headerlink" title="向量列空间（column spaces）"></a>向量列空间（column spaces）</h4><p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/1oUCdb"><img src="https://s1.imagehub.cc/images/2024/02/28/2e3c67721382085e32c5b61c0fd4ff27.png" alt="2e3c67721382085e32c5b61c0fd4ff27.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/1oUOdJ"><img src="https://s1.imagehub.cc/images/2024/02/28/08ecc18b5ba8705258ae85f46cadad9e.png" alt="08ecc18b5ba8705258ae85f46cadad9e.png"></a></p>
+<p>If there is a solution $x$ to $Ax &#x3D; b$, then $b$ must be a linear combination of the columns of $A$. The system of linear equations $Ax &#x3D; b$ is solvable <strong>exactly when $b$ is a vector in the column space of A</strong>.</p>
+<p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/1oUWWe"><img src="https://s1.imagehub.cc/images/2024/02/28/2b9f60bab790993c531278f5b336eb71.png" alt="2b9f60bab790993c531278f5b336eb71.png"></a></p>
+<h4 id="向量零空间（nullspace）"><a href="#向量零空间（nullspace）" class="headerlink" title="向量零空间（nullspace）"></a>向量零空间（nullspace）</h4><p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/1XwdNU"><img src="https://s1.imagehub.cc/images/2024/03/01/8af21c4e589929452a05c9013b9f334a.png" alt="8af21c4e589929452a05c9013b9f334a.png"></a></p>
+<p>使得 $Ax &#x3D; 0$ 的 $x$ 组成了矩阵 $A$ 的向量零空间（为什么是空间的证明很简单，在上面已给出）。<br>但使得 $Ax &#x3D; b, b \neq 0$ 的 $x$ 构不成一个空间，因为<strong>不包含零向量</strong>。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>MIT 18.06 - Lecture 5 &amp; 6</p><p><a href="http://example.com/2024/02/28/MIT-18-06-Lecture-5-&amp;-6/">http://example.com/2024/02/28/MIT-18-06-Lecture-5-&amp;-6/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Zylll</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2024-02-28</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2024-03-09</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">线性代数</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2024/03/01/MIT-18-06-Lecture-7-&amp;-8/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">MIT 18.06 - Lecture 7 &amp; 8</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2024/02/27/UCB-CS161-Lecture-5/"><span class="level-item">UCB - CS161 - Lecture 5</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="https://s1.imagehub.cc/images/2024/11/12/bf93f90311c802220474e9bf8ff8b3d4.jpg" alt="Zylll"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Zylll</p><p class="is-size-6 is-block">sakamotocoda@gmail.com</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Xi&#039;an Jiaotong University</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">24</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">6</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">14</p></a></div></div></nav></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#置换矩阵（permutation）"><span class="level-left"><span class="level-item">1</span><span class="level-item">置换矩阵（permutation）</span></span></a></li><li><a class="level is-mobile" href="#转置（transposes）"><span class="level-left"><span class="level-item">2</span><span class="level-item">转置（transposes）</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#对称矩阵（symmetric-martix）"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">对称矩阵（symmetric martix）</span></span></a></li></ul></li><li><a class="level is-mobile" href="#向量空间（vector-spaces）"><span class="level-left"><span class="level-item">3</span><span class="level-item">向量空间（vector spaces）</span></span></a></li><li><a class="level is-mobile" href="#向量子空间（vector-subspaces）"><span class="level-left"><span class="level-item">4</span><span class="level-item">向量子空间（vector subspaces）</span></span></a></li><li><a class="level is-mobile" href="#向量列空间（column-spaces）"><span class="level-left"><span class="level-item">5</span><span class="level-item">向量列空间（column spaces）</span></span></a></li><li><a class="level is-mobile" href="#向量零空间（nullspace）"><span class="level-left"><span class="level-item">6</span><span class="level-item">向量零空间（nullspace）</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Zylll&#039;s Blog</a><p class="is-size-7"><span>&copy; 2024 Zylll</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">做一名万物学徒。</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mhchem.min.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

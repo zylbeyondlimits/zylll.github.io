@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>计算机组织与体系结构课程设计 - 实验报告 - Hexo</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Hexo"><meta name="msapplication-TileImage" content="https://s1.imagehub.cc/images/2023/10/19/Photographer.jpeg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hexo"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="设计机器指令，并编写相应的微程序，上机调试，掌握计算机整机概念。掌握微程序的设计方法，学会编写二进制微指令代码表，全面了解并掌握微程序控制方式计算机的设计方法。"><meta property="og:type" content="blog"><meta property="og:title" content="计算机组织与体系结构课程设计 - 实验报告"><meta property="og:url" content="http://example.com/2023/10/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E7%BB%87%E4%B8%8E%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="设计机器指令，并编写相应的微程序，上机调试，掌握计算机整机概念。掌握微程序的设计方法，学会编写二进制微指令代码表，全面了解并掌握微程序控制方式计算机的设计方法。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://s1.imagehub.cc/images/2023/10/30/5232aee77d89ec20759eb25c49af21cb.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2023/10/30/498d8665329b3d4948cb6d48c936cb1f.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2023/10/30/53d4b91cfa94e88a67455b96263b9e8f.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2023/10/30/bba39b2379e62586a8061c7ae1ebed7f.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2023/10/30/c91eb49d3a92600a73f8f4a67f096efd.jpeg"><meta property="og:image" content="https://s1.imagehub.cc/images/2023/10/30/d439bd242100b3e6d33cf99174f57862.jpeg"><meta property="og:image" content="https://s1.imagehub.cc/images/2023/10/30/cf4325c503c64498f792db5244cede3e.jpeg"><meta property="og:image" content="https://s1.imagehub.cc/images/2023/10/30/53d4b91cfa94e88a67455b96263b9e8f.png"><meta property="article:published_time" content="2023-10-30T11:35:34.000Z"><meta property="article:modified_time" content="2023-10-30T12:45:54.402Z"><meta property="article:author" content="Zylll"><meta property="article:tag" content="计组"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://s1.imagehub.cc/images/2023/10/30/5232aee77d89ec20759eb25c49af21cb.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2023/10/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E7%BB%87%E4%B8%8E%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"},"headline":"计算机组织与体系结构课程设计 - 实验报告","image":["https://s1.imagehub.cc/images/2023/10/30/5232aee77d89ec20759eb25c49af21cb.png","https://s1.imagehub.cc/images/2023/10/30/498d8665329b3d4948cb6d48c936cb1f.png","https://s1.imagehub.cc/images/2023/10/30/53d4b91cfa94e88a67455b96263b9e8f.png","https://s1.imagehub.cc/images/2023/10/30/bba39b2379e62586a8061c7ae1ebed7f.png","https://s1.imagehub.cc/images/2023/10/30/53d4b91cfa94e88a67455b96263b9e8f.png"],"datePublished":"2023-10-30T11:35:34.000Z","dateModified":"2023-10-30T12:45:54.402Z","author":{"@type":"Person","name":"Zylll"},"publisher":{"@type":"Organization","name":"Hexo","logo":{"@type":"ImageObject","url":{"text":"Zylll's Blog"}}},"description":"设计机器指令，并编写相应的微程序，上机调试，掌握计算机整机概念。掌握微程序的设计方法，学会编写二进制微指令代码表，全面了解并掌握微程序控制方式计算机的设计方法。"}</script><link rel="canonical" href="http://example.com/2023/10/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E7%BB%87%E4%B8%8E%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><link rel="icon" href="https://s1.imagehub.cc/images/2023/10/19/Photographer.jpeg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Zylll&#039;s Blog</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" target="_blank" rel="noopener" href="https://zylbeyondlimits.github.io/2023/10/19/About%20me/">About Me</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-10-30T11:35:34.000Z" title="2023/10/30 19:35:34">2023-10-30</time>发表</span><span class="level-item"><time dateTime="2023-10-30T12:45:54.402Z" title="2023/10/30 20:45:54">2023-10-30</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E4%B8%93%E4%B8%9A%E7%9F%A5%E8%AF%86/">专业知识</a></span><span class="level-item">14 分钟读完 (大约2142个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">计算机组织与体系结构课程设计 - 实验报告</h1><div class="content"><h4 id="一-实验目的"><a href="#一-实验目的" class="headerlink" title="一. 实验目的"></a>一. 实验目的</h4><ol>
+<li>深入理解基本模型计算机的功能、组成知识。</li>
+<li>深入学习计算机各类典型指令的执行流程。</li>
+<li>学习微程序控制器的设计过程和相关技术，掌握 LPM_ROM 的配置方法。</li>
+<li>自己设计 5～8 条机器指令，并编写相应的微程序，上机调试，掌握计算机整机概念。掌握微程序的设计方法，学会编写二进制微指令代码表，全面了解并掌握微程序控制方式计算机的设计方法。</li>
+</ol>
+<h4 id="二-实验原理"><a href="#二-实验原理" class="headerlink" title="二. 实验原理"></a>二. 实验原理</h4><p>实验中，计算机数据通路的控制将由微过程控制器来完成，CPU 从内存中取出一条机器指令到指令执行结束的一个指令周期，全部由微指令组成的序列来完成，即一条机器指令对应一个微程序。</p>
+<p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/1ebibT"><img src="https://s1.imagehub.cc/images/2023/10/30/5232aee77d89ec20759eb25c49af21cb.png" alt="5232aee77d89ec20759eb25c49af21cb.png"></a></p>
+<p>为了向 RAM 中装入程序和数据，检查写入是否正确，并能启动程序执行，还必须设计三个控制台操作微程序。</p>
+<ol>
+<li>存储器读操作（KRD）：下载实验程序后按总清除按键（CLR）后，控制台 SWA、SWB 为 “0 0” 时，可对 RAM 连续手动读操作。</li>
+<li>存储器写操作（KWE）：下载实验程序后按总清除按键（CLR）后，控制台 SWA、SWB 为 “0 1” 时，可对 RAM 连续手动写操作。</li>
+<li>启动程序（RP）：下载实验程序后按总清除按键（CLR）后，控制台 SWA、SWB 为 “1 1” 时，即可转入到微地址 “01” 号 “取指令” 微指令，启动程序运行。</li>
+</ol>
+<h5 id="设计指令说明"><a href="#设计指令说明" class="headerlink" title="设计指令说明"></a>设计指令说明</h5><p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/1ebyvd"><img src="https://s1.imagehub.cc/images/2023/10/30/498d8665329b3d4948cb6d48c936cb1f.png" alt="498d8665329b3d4948cb6d48c936cb1f.png"></a></p>
+<p>其中 IN 为单字长（8 位二进制），其余为双字长指令，<code>XX H</code> 为 addr 对应的十六进制地址码。</p>
+<p>当全部微程序设计完毕后，应将每条微指令代码化，设计出二进制微代码表（前提是去弄懂每一位的含义）。笔者在设计的时候为了方便查看，在下表中将每个在相同模块里的微指令用相同的颜色进行了标识。</p>
+<p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/1ebAjt"><img src="https://s1.imagehub.cc/images/2023/10/30/53d4b91cfa94e88a67455b96263b9e8f.png" alt="53d4b91cfa94e88a67455b96263b9e8f.png"></a></p>
+<h5 id="微程序流程图"><a href="#微程序流程图" class="headerlink" title="微程序流程图"></a>微程序流程图</h5><p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/1eMcNI"><img src="https://s1.imagehub.cc/images/2023/10/30/bba39b2379e62586a8061c7ae1ebed7f.png" alt="bba39b2379e62586a8061c7ae1ebed7f.png"></a></p>
+<h4 id="三-实验步骤"><a href="#三-实验步骤" class="headerlink" title="三. 实验步骤"></a>三. 实验步骤</h4><h5 id="（1）微程序的输入"><a href="#（1）微程序的输入" class="headerlink" title="（1）微程序的输入"></a>（1）微程序的输入</h5><p>根据设计出来的二进制微代码表，将微指令按顺序放入 LPM_ROM 配置文件 ROM_5.mif 里。</p>
+<p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/WechatIMG4182.1eMVjg"><img src="https://s1.imagehub.cc/images/2023/10/30/c91eb49d3a92600a73f8f4a67f096efd.jpeg" alt="c91eb49d3a92600a73f8f4a67f096efd.jpeg"></a></p>
+<h5 id="（2）编辑RAM中的内容"><a href="#（2）编辑RAM中的内容" class="headerlink" title="（2）编辑RAM中的内容"></a>（2）编辑RAM中的内容</h5><p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/WechatIMG4183.1eMhoo"><img src="https://s1.imagehub.cc/images/2023/10/30/d439bd242100b3e6d33cf99174f57862.jpeg" alt="d439bd242100b3e6d33cf99174f57862.jpeg"></a></p>
+<h5 id="（3）指令功能的验证"><a href="#（3）指令功能的验证" class="headerlink" title="（3）指令功能的验证"></a>（3）指令功能的验证</h5><ol>
+<li><p>编译工程文件，将 .sof 文件上传至实验箱内。</p>
+</li>
+<li><p>按 1 次系统复位键 8 ，并置键 8 为高电平，使 CPU 允许正常工作。</p>
+</li>
+<li><p>控制开关（键 4 、键 3 ）设置为 <code>SWB,SWA = 1,1</code> ，处于程序执行方式。</p>
+</li>
+<li><p>通过键 2 、键 1 输入运算数据，如 <code>34H</code> ，按 4 次单步键 7，产生 2 个脉冲，执行 2 条微指令，微程序流程进入到控制台的 <code>RP(11)</code> ，此时的微指令地址是 <code>23</code>，微指令码 <code>MC = 008001</code>，<code>IN = 34H</code>。</p>
+</li>
+<li><p>再用键 7 产生 1 个脉冲，执行 1 条微指令，微程序流程进入到 <code>运行微程序</code> 的最上块： 此时 <code>PC = 00</code> 送地址寄存器 <code>AR = 00</code> ， <code>PC</code> 自动加 1 ，<code>PC = 01</code>， <code>MC = 01ED82</code>，<code>IN = 34H</code>。</p>
+</li>
+<li><p>键 7 产生 1 个脉冲，执行微指令 <code>MC = 00C048</code>，RAM 中的第一条指令码 <code>00</code> 进入<br> <code>BUS</code>，再由 <code>BUS</code> 进入指令寄存器 <code>IR = 00</code>。键 7 再进 1 个脉冲，进入 <code>MC = 001001</code>，执行指令 <code>IN</code>，送数 <code>IN -&gt; R0 = 34H</code>。</p>
+</li>
+<li><p>键 7 产生 1 个脉冲，执行完 <code>IN</code> 指令后，返回到初始端，执行微指令 <code>MC = 01ED82</code>。</p>
+</li>
+<li><p>键 7 产生 2 个脉冲后，执行微指令 <code>MC = 01ED83</code>，即执行 <code>SUB</code> 指令的第 1 步：<code>PC</code> 送 <code>AR = 02</code> ，<code>PC + 1 = 03</code> ，这时 <code>RAM</code> 中在 <code>02</code> 地址的 <code>0AH</code> 进入 <code>BUS = 0A</code>。</p>
+</li>
+<li><p>键 7 产生 1 个脉冲，执行微指令 <code>MC = 00E004</code> ，即执行 <code>SUB</code> 指令的第 2 步： <code>BUS</code> 数据送 <code>AR = 0A</code>，由于 <code>0A</code> 是 <code>SUB</code> 指令的加数的间接地址，而在地址 <code>0A</code> 中放有 <code>01H</code>，最后完成的减法是 <code>34H - 01H = 33H</code>。</p>
+</li>
+<li><p>键 7 产生 1 个脉冲，<code>MC = 00B005</code> ，执行 <code>SUB</code> 的第 3 步：将 <code>RAM</code> 中 <code>0A</code> 地址的数据 <code>01H</code> 送 <code>BUS</code> ，再送 <code>DR2 = 01H</code>。注意，此时指令寄存器 <code>IR</code> 中仍放有 <code>SUB</code> 的操作码 <code>10H</code>， <code>PC = 03</code> 指向下一条指令 <code>AND</code>。</p>
+</li>
+<li><p>键 7 产生 1 个脉冲，<code>MC = 01A206</code>，执行 <code>SUB</code> 的第 4 步（微地址是 <code>05</code>）， <code>R0</code> 送 <code>DR1 = 34H</code>。</p>
+</li>
+<li><p>键 7 产生 1 个脉冲，<code>MC = 619A01</code> ，执行 <code>SUB</code> 的最后一步，<code>DR1 - DR2 = 33H</code>，通过总线 <code>BUS</code> 送 <code>R0 = 33H</code>。 键 7 再产生 1 个脉冲，返回到初始端，执行微指令 <code>MC = 01ED82</code>。</p>
+</li>
+<li><p>键 7 产生 2 个脉冲，<code>MC = 01ED95</code>，执行 <code>AND</code> 指令；键 7 再 4 个脉冲后，位运算与的结果 <code>33H &amp; 12H = 10H</code> 被写入 <code>R0</code> ，即 <code>R0 = 10H</code> 。键 7 产生 1 个脉冲后返回到初始端，执行微指令 <code>MC = 01ED82</code>。</p>
+</li>
+<li><p>键 7 产生 2 个脉冲，<code>MC = 01ED99</code>，执行 <code>MOV</code> 指令；键 7 再 2 个脉冲后， <code>RAM</code> 中地址为 <code>0C</code> 的数字 <code>00H</code> 被写入 <code>DR2</code>，即 <code>DR2 = 00H</code> 。键 7 产生 1 个脉冲后返回到初始端，执行微指令 <code>MC = 01ED82</code>。</p>
+</li>
+<li><p>键 7 产生 2 个脉冲，<code>MC = 01A21B</code>，执行 <code>INC</code> 指令；键 7 再 1 个脉冲后，<code>R0</code> 中的值加 1，即 <code>R0 = 11H</code> 。键 7 产生 1 个脉冲后返回到初始端，执行微指令 <code>MC = 01ED82</code>。</p>
+</li>
+</ol>
+<p>附：实验过程中的图片</p>
+<p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/1e6EZa"><img src="https://s1.imagehub.cc/images/2023/10/30/cf4325c503c64498f792db5244cede3e.jpeg" alt="cf4325c503c64498f792db5244cede3e.jpeg"></a></p>
+<h4 id="四-实验感想"><a href="#四-实验感想" class="headerlink" title="四. 实验感想"></a>四. 实验感想</h4><p>由于「计算机组织与体系结构」是上学期的课程，时隔将近 4 个月后再接触到相关的知识，有一种熟悉又陌生的感觉，当时学到的一些知识已经有所遗忘。所以笔者在设计指令之前，又对 CPU 、数据通路、总线等相关知识进行了回顾与复习。在这次漫长的设计实验以后，我对这方面的知识理解得以更加深刻。</p>
+<p>设计指令并构造 24 位微代码是十分辛苦的，在设计第一条指令时花费了很长时间。随着自己对每一位的含义的越来越熟悉，同时也发现了不同指令在某些地方的相似之处，我明白了老师课前所提到的“开头设计指令很慢，之后会越来越快”的含义：有些指令有许多部分是很相似的，在代码上的不同很少，主要是会因为执行下一条指令的位置不同而不同。</p>
+<p>同时当时自己为了设计方便，构建微代码表时基本把相同的指令用到的微操作都放在了一起，不断向微地址大的地方累加，这也造成了本人微代码表中会有空行的出现（详见下图），这也是我在实验中意识到自己不足的一个地方。</p>
+<p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/1ebAjt"><img src="https://s1.imagehub.cc/images/2023/10/30/53d4b91cfa94e88a67455b96263b9e8f.png" alt="53d4b91cfa94e88a67455b96263b9e8f.png"></a></p>
+<p>总的来说这次实验虽然辛苦，但是我收获颇丰。当理论与实际结合起来，并通过自己的努力验证了理论的正确性的时候，心中的激动和成就感是很足的。</p>
+<p>最后感谢老师在实验中耐心的答疑与同伴在我出现问题时的“拔刀相助”。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>计算机组织与体系结构课程设计 - 实验报告</p><p><a href="http://example.com/2023/10/30/计算机组织与体系结构课程设计-实验报告/">http://example.com/2023/10/30/计算机组织与体系结构课程设计-实验报告/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Zylll</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-10-30</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-10-30</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AE%A1%E7%BB%84/">计组</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/11/03/%E6%9D%9C%E6%96%87%E4%BA%AE%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0-chap4-%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA%E6%94%BB%E5%87%BB/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">杜文亮深度实践笔记 - chap4 - 缓冲区溢出攻击</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/10/27/%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%8E%E8%AE%BE%E8%AE%A1-Lab2-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E9%AA%8C%E6%80%A7%E8%83%BD%E6%AF%94%E8%BE%83/"><span class="level-item">算法分析与设计 - Lab2 - 排序算法的性能比较</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="https://s1.imagehub.cc/images/2024/11/12/bf93f90311c802220474e9bf8ff8b3d4.jpg" alt="Zylll"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Zylll</p><p class="is-size-6 is-block">sakamotocoda@gmail.com</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Xi&#039;an Jiaotong University</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">24</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">6</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">14</p></a></div></div></nav></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#一-实验目的"><span class="level-left"><span class="level-item">1</span><span class="level-item">一. 实验目的</span></span></a></li><li><a class="level is-mobile" href="#二-实验原理"><span class="level-left"><span class="level-item">2</span><span class="level-item">二. 实验原理</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#设计指令说明"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">设计指令说明</span></span></a></li><li><a class="level is-mobile" href="#微程序流程图"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">微程序流程图</span></span></a></li></ul></li><li><a class="level is-mobile" href="#三-实验步骤"><span class="level-left"><span class="level-item">3</span><span class="level-item">三. 实验步骤</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#（1）微程序的输入"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">（1）微程序的输入</span></span></a></li><li><a class="level is-mobile" href="#（2）编辑RAM中的内容"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">（2）编辑RAM中的内容</span></span></a></li><li><a class="level is-mobile" href="#（3）指令功能的验证"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">（3）指令功能的验证</span></span></a></li></ul></li><li><a class="level is-mobile" href="#四-实验感想"><span class="level-left"><span class="level-item">4</span><span class="level-item">四. 实验感想</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Zylll&#039;s Blog</a><p class="is-size-7"><span>&copy; 2024 Zylll</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">做一名万物学徒。</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mhchem.min.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

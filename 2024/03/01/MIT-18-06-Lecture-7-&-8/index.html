@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>MIT 18.06 - Lecture 7 &amp; 8 - Hexo</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Hexo"><meta name="msapplication-TileImage" content="https://s1.imagehub.cc/images/2023/10/19/Photographer.jpeg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hexo"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="MIT 18.06 线性代数第 7 讲与第 8 讲的学习笔记，介绍了计算 Ax &amp;#x3D; 0 与 Ax &amp;#x3D; b 的解的算法。"><meta property="og:type" content="blog"><meta property="og:title" content="MIT 18.06 - Lecture 7 &amp; 8"><meta property="og:url" content="http://example.com/2024/03/01/MIT-18-06-Lecture-7-&amp;-8/"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="MIT 18.06 线性代数第 7 讲与第 8 讲的学习笔记，介绍了计算 Ax &amp;#x3D; 0 与 Ax &amp;#x3D; b 的解的算法。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://s1.imagehub.cc/images/2024/03/01/26652caf4355a9f948f40b4fe1293520.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2024/03/01/df3c095fd95a80eb4975ed2bdaa5c7f4.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2024/03/01/da4a201ad1f6e0d13eac1ab5be7a130b.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2024/03/05/c4982eb74d0eba322d8829aca7d0f367.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2024/03/05/0726a6fa6e959d42c27ee6bca91b4cce.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2024/03/05/6de943d8c9d90b1f4dd61013ffc6cab5.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2024/03/05/19631591ceb51941ad0938aa48745ba5.png"><meta property="og:image" content="https://s1.imagehub.cc/images/2024/03/05/f97300b146139bfd05fe9d35fddc2869.png"><meta property="article:published_time" content="2024-03-01T07:03:58.000Z"><meta property="article:modified_time" content="2024-03-09T07:18:28.091Z"><meta property="article:author" content="Zylll"><meta property="article:tag" content="线性代数"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://s1.imagehub.cc/images/2024/03/01/26652caf4355a9f948f40b4fe1293520.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2024/03/01/MIT-18-06-Lecture-7-&-8/"},"headline":"MIT 18.06 - Lecture 7 & 8","image":["https://s1.imagehub.cc/images/2024/03/01/26652caf4355a9f948f40b4fe1293520.png","https://s1.imagehub.cc/images/2024/03/01/df3c095fd95a80eb4975ed2bdaa5c7f4.png","https://s1.imagehub.cc/images/2024/03/01/da4a201ad1f6e0d13eac1ab5be7a130b.png","https://s1.imagehub.cc/images/2024/03/05/c4982eb74d0eba322d8829aca7d0f367.png","https://s1.imagehub.cc/images/2024/03/05/0726a6fa6e959d42c27ee6bca91b4cce.png","https://s1.imagehub.cc/images/2024/03/05/6de943d8c9d90b1f4dd61013ffc6cab5.png","https://s1.imagehub.cc/images/2024/03/05/19631591ceb51941ad0938aa48745ba5.png","https://s1.imagehub.cc/images/2024/03/05/f97300b146139bfd05fe9d35fddc2869.png"],"datePublished":"2024-03-01T07:03:58.000Z","dateModified":"2024-03-09T07:18:28.091Z","author":{"@type":"Person","name":"Zylll"},"publisher":{"@type":"Organization","name":"Hexo","logo":{"@type":"ImageObject","url":{"text":"Zylll's Blog"}}},"description":"MIT 18.06 线性代数第 7 讲与第 8 讲的学习笔记，介绍了计算 Ax &#x3D; 0 与 Ax &#x3D; b 的解的算法。"}</script><link rel="canonical" href="http://example.com/2024/03/01/MIT-18-06-Lecture-7-&amp;-8/"><link rel="icon" href="https://s1.imagehub.cc/images/2023/10/19/Photographer.jpeg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Zylll&#039;s Blog</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" target="_blank" rel="noopener" href="https://zylbeyondlimits.github.io/2023/10/19/About%20me/">About Me</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-03-01T07:03:58.000Z" title="2024/3/1 15:03:58">2024-03-01</time>发表</span><span class="level-item"><time dateTime="2024-03-09T07:18:28.091Z" title="2024/3/9 15:18:28">2024-03-09</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span><span class="level-item">8 分钟读完 (大约1174个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">MIT 18.06 - Lecture 7 &amp; 8</h1><div class="content"><h3 id="Solving-Ax-0"><a href="#Solving-Ax-0" class="headerlink" title="Solving Ax &#x3D; 0"></a>Solving Ax &#x3D; 0</h3><p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/%E6%88%AA%E5%B1%8F2024-03-01-15.21.18.1XeUKO"><img src="https://s1.imagehub.cc/images/2024/03/01/26652caf4355a9f948f40b4fe1293520.png" alt="26652caf4355a9f948f40b4fe1293520.png"></a></p>
+<p>对 $A$ 进行消元。<br>在消元的过程中，可能会遇见<strong>该列没有主元的情况</strong>，继续寻找下一个主元即可。<br>在消元的过程中，可能会遇见<strong>某一行被消为 0 的情况</strong>：<strong>这说明在 $A$ 中这一行是其他行的线性组合。</strong></p>
+<p>有主元的列（pivot columns），没主元的列（free columns）对应的方程组中的变量 $x_2, x_4$ 可以取任意值，也称他们为自由变量。通过自由变量的取值，可以确定主元的取值。</p>
+<p><strong>矩阵中主元的个数 $r$</strong> 也被称作该矩阵的<strong>秩</strong>（rank），自由变量的个数 $m &#x3D; n - r$。一般每个自由变量轮流取值为 $1$，其余全都取 $0$。由此可以得到 $m$ 个<strong>特解</strong>。<strong>这 $m$ 个特解的线性组合就是 $A$ 对应的零空间</strong>。</p>
+<p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/%E6%88%AA%E5%B1%8F2024-03-01-15.15.45.1XeK6a"><img src="https://s1.imagehub.cc/images/2024/03/01/df3c095fd95a80eb4975ed2bdaa5c7f4.png" alt="df3c095fd95a80eb4975ed2bdaa5c7f4.png"></a></p>
+<p>通过消元，使得 $Ax &#x3D; 0$ 变成 $Ux &#x3D; 0$；再将所有 pivots 的值都变成 1，且 pivots 之上和之下都变成 0，实现从 $Ux &#x3D; 0$ 变成 $Rx &#x3D; 0$ 的过程。</p>
+<p>最终的 $R$ 被称作<strong>简化行阶梯形式</strong>（reduced row echelon form）的矩阵。</p>
+<p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/1XBvxv"><img src="https://s1.imagehub.cc/images/2024/03/01/da4a201ad1f6e0d13eac1ab5be7a130b.png" alt="da4a201ad1f6e0d13eac1ab5be7a130b.png"></a></p>
+<p><strong>由于 $A$ 对应的零空间是 $A$ 中列向量的线性组合，所以可以将 $A$ 的列进行交换。</strong><br><strong>转化成上图中 $R$ 的形式后，可以借助矩阵乘法，引入一个零空间矩阵 $N$ 使得 $RN &#x3D; 0$，不难得出 $N$ 的样子。</strong></p>
+<p><strong>$N$ 中的每一列就是自由变量不同取值所得到的特解，$N$ 中列向量线性组合的结果就是 $N$ 所对应的零空间。用这种方法可以很快的得到 $Ax &#x3D; 0$ 的解。</strong></p>
+<h3 id="Solving-Ax-b"><a href="#Solving-Ax-b" class="headerlink" title="Solving Ax &#x3D; b"></a>Solving Ax &#x3D; b</h3><p>“If there is a solution $x$ to $Ax &#x3D; b$, then $b$ must be a linear combination of the columns of $A$. The system of linear equations $Ax &#x3D; b$ is solvable <strong>exactly when $b$ is a vector in the column space of A</strong>.”</p>
+<p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/%E6%88%AA%E5%B1%8F2024-03-05-15.20.50.1XDhh0"><img src="https://s1.imagehub.cc/images/2024/03/05/c4982eb74d0eba322d8829aca7d0f367.png" alt="c4982eb74d0eba322d8829aca7d0f367.png"></a></p>
+<p>满足条件 $Ax &#x3D; b$ 的所有解：特解 + 零向量空间中的所有向量。</p>
+<p>特解：让所有的自由变量取值为 0。</p>
+<p>Augmented matrix：增广矩阵</p>
+<p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/%E6%88%AA%E5%B1%8F2024-03-05-15.27.56.1XS01h"><img src="https://s1.imagehub.cc/images/2024/03/05/0726a6fa6e959d42c27ee6bca91b4cce.png" alt="0726a6fa6e959d42c27ee6bca91b4cce.png"></a><br><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/%E6%88%AA%E5%B1%8F2024-03-05-15.28.06.1XSwss"><img src="https://s1.imagehub.cc/images/2024/03/05/6de943d8c9d90b1f4dd61013ffc6cab5.png" alt="6de943d8c9d90b1f4dd61013ffc6cab5.png"></a></p>
+<p>由于 $Ax_p &#x3D; b , \ Ax_n &#x3D; 0 \Rightarrow (Ax_p + Ax_n &#x3D; b, \ A(x_p + x_n) &#x3D; b)$，故通过这种方式可以得到所有满足条件的解。</p>
+<p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/%E6%88%AA%E5%B1%8F2024-03-05-15.28.29.1XS34G"><img src="https://s1.imagehub.cc/images/2024/03/05/19631591ceb51941ad0938aa48745ba5.png" alt="19631591ceb51941ad0938aa48745ba5.png"></a></p>
+<p>上图中的 $x_{complete} &#x3D; \cdots$ 中，第二项前少加了 $c_1$。</p>
+<h3 id="矩阵的秩与线性方程组的解的关系"><a href="#矩阵的秩与线性方程组的解的关系" class="headerlink" title="矩阵的秩与线性方程组的解的关系"></a>矩阵的秩与线性方程组的解的关系</h3><p>对于一个 $m \times n$ 的矩阵 $A$，其秩为 $r$。</p>
+<h4 id="行满秩（Full-row-rank-r-m）"><a href="#行满秩（Full-row-rank-r-m）" class="headerlink" title="行满秩（Full row rank, r &#x3D; m）"></a>行满秩（Full row rank, r &#x3D; m）</h4><p>最简矩阵形式：$ \left[\begin{array}{c}<br>                I \quad F<br>                \end{array}\right]$<br>没有全是 $0$ 的行，故对 $b$ 无要求（因为消元后不会出现 $0 &#x3D; b$ 的线性组合 的情况），即 $Ax &#x3D; b$ 对任何 $b$ 始终有解，且有无穷多解。<br>自由变量的个数 $&#x3D; n - r &#x3D; n - m$（零空间的维度是 $n - m$）。</p>
+<h4 id="列满秩（Full-Column-rank-r-n）"><a href="#列满秩（Full-Column-rank-r-n）" class="headerlink" title="列满秩（Full Column rank, r &#x3D; n）"></a>列满秩（Full Column rank, r &#x3D; n）</h4><p>最简矩阵形式：$ \left[\begin{array}{c}<br>                I \<br>                0<br>                \end{array}\right]$</p>
+<p>在这种情况下，零向量空间只包含零向量，也代表着列向量们是线性无关的。</p>
+<p>自由变量的个数 $&#x3D; n - r &#x3D; n - n &#x3D; 0$（自由变量的个数相当于是零空间的维度），即若 $Ax &#x3D; b$ 有解，则必定是唯一解。即在列满秩的情况下，$Ax &#x3D; b$ 的解的个数是 0 或 1。</p>
+<h4 id="行列同时满秩（Full-row-and-column-rank-r-m-n）"><a href="#行列同时满秩（Full-row-and-column-rank-r-m-n）" class="headerlink" title="行列同时满秩（Full row and column rank, r &#x3D; m &#x3D; n）"></a>行列同时满秩（Full row and column rank, r &#x3D; m &#x3D; n）</h4><p>最简矩阵形式：$I$<br>代表着 $A$ 是一个<strong>可逆方阵</strong>。<br><strong>The nullspace has dimension zero, and $Ax &#x3D; b$ has a unique solution for every $b$ in $R ^ m$.</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.imagehub.cc/image/1ZduK7"><img src="https://s1.imagehub.cc/images/2024/03/05/f97300b146139bfd05fe9d35fddc2869.png" alt="f97300b146139bfd05fe9d35fddc2869.png"></a></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>MIT 18.06 - Lecture 7 &amp; 8</p><p><a href="http://example.com/2024/03/01/MIT-18-06-Lecture-7-&amp;-8/">http://example.com/2024/03/01/MIT-18-06-Lecture-7-&amp;-8/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Zylll</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2024-03-01</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2024-03-09</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">线性代数</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2024/03/05/%E5%A7%9A%E6%9C%9F%E6%99%BA-%E7%99%BE%E4%B8%87%E5%AF%8C%E7%BF%81%E9%97%AE%E9%A2%98/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">姚期智 - 亿万富翁问题</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2024/02/28/MIT-18-06-Lecture-5-&amp;-6/"><span class="level-item">MIT 18.06 - Lecture 5 &amp; 6</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="https://s1.imagehub.cc/images/2024/11/12/bf93f90311c802220474e9bf8ff8b3d4.jpg" alt="Zylll"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Zylll</p><p class="is-size-6 is-block">sakamotocoda@gmail.com</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Xi&#039;an Jiaotong University</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">24</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">6</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">14</p></a></div></div></nav></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Solving-Ax-0"><span class="level-left"><span class="level-item">1</span><span class="level-item">Solving Ax = 0</span></span></a></li><li><a class="level is-mobile" href="#Solving-Ax-b"><span class="level-left"><span class="level-item">2</span><span class="level-item">Solving Ax = b</span></span></a></li><li><a class="level is-mobile" href="#矩阵的秩与线性方程组的解的关系"><span class="level-left"><span class="level-item">3</span><span class="level-item">矩阵的秩与线性方程组的解的关系</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#行满秩（Full-row-rank-r-m）"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">行满秩（Full row rank, r = m）</span></span></a></li><li><a class="level is-mobile" href="#列满秩（Full-Column-rank-r-n）"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">列满秩（Full Column rank, r = n）</span></span></a></li><li><a class="level is-mobile" href="#行列同时满秩（Full-row-and-column-rank-r-m-n）"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">行列同时满秩（Full row and column rank, r = m = n）</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Zylll&#039;s Blog</a><p class="is-size-7"><span>&copy; 2024 Zylll</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">做一名万物学徒。</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mhchem.min.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
