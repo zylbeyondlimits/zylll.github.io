@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>CS106L Notes - Zylll&#039;s blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Zylll&#039;s blog"><meta name="msapplication-TileImage" content="https://s1.imagehub.cc/images/2024/11/14/f79cc6ed028bbcff3a58bd3de64b0be6.jpg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Zylll&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Standford CS106L 课程的学习笔记，介绍了现代 C++ 中的编程知识。"><meta property="og:type" content="blog"><meta property="og:title" content="CS106L Notes"><meta property="og:url" content="http://example.com/2025/10/28/CS106L-Notes/"><meta property="og:site_name" content="Zylll&#039;s blog"><meta property="og:description" content="Standford CS106L 课程的学习笔记，介绍了现代 C++ 中的编程知识。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/img/og_image.png"><meta property="article:published_time" content="2025-10-28T13:23:40.000Z"><meta property="article:modified_time" content="2025-10-29T05:45:21.437Z"><meta property="article:author" content="Zylll"><meta property="article:tag" content="C++"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://example.com/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2025/10/28/CS106L-Notes/"},"headline":"CS106L Notes","image":["http://example.com/img/og_image.png"],"datePublished":"2025-10-28T13:23:40.000Z","dateModified":"2025-10-29T05:45:21.437Z","author":{"@type":"Person","name":"Zylll"},"publisher":{"@type":"Organization","name":"Zylll's blog","logo":{"@type":"ImageObject","url":{"text":"Zylll's Blog"}}},"description":"Standford CS106L 课程的学习笔记，介绍了现代 C++ 中的编程知识。"}</script><link rel="canonical" href="http://example.com/2025/10/28/CS106L-Notes/"><link rel="icon" href="https://s1.imagehub.cc/images/2024/11/14/f79cc6ed028bbcff3a58bd3de64b0be6.jpg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Zylll&#039;s Blog</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" target="_blank" rel="noopener" href="https://sakamotocoda.com/2024/11/13/About%20me/">About me</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-10-28T13:23:40.000Z" title="2025/10/28 21:23:40">2025-10-28</time>发表</span><span class="level-item"><time dateTime="2025-10-29T05:45:21.437Z" title="2025/10/29 13:45:21">2025-10-29</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/C/">C++</a></span><span class="level-item">5 分钟读完 (大约707个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">CS106L Notes</h1><div class="content"><h2 id="Lecture-1-Welcome"><a href="#Lecture-1-Welcome" class="headerlink" title="Lecture 1: Welcome"></a>Lecture 1: Welcome</h2><h3 id="Design-Philosophy-of-C"><a href="#Design-Philosophy-of-C" class="headerlink" title="Design Philosophy of C++"></a>Design Philosophy of C++</h3><ul>
+<li><p><strong>Only add features if they solve an actual problem</strong></p>
+<p>  （C++ 标准委员会（负责语言发展的团队）在添加新特性（如 C++11, 14, 17, 20）时，会要求提案者证明这个新功能能解决一个现实世界中 C++ 程序员正面临的、且现有功能无法很好解决的问题。这就是为什么 C++ 的很多特性（比如 lambda 表达式、智能指针）都直接对应着特定的编程痛点。）</p>
+</li>
+<li><p><strong>Programmers should be free to choose their own style</strong></p>
+</li>
+<li><p><strong>Compartmentalization is key</strong><br>**</p>
+</li>
+<li><p><strong>Allow the programmer full control if they want it</strong></p>
+<p>  （这是 C++ 最著名（也最危险）的原则之一，常被称为 “你不需要为你不用的东西付出代价”。C++ 提供了非常底层的能力，让你可以直接操控硬件和内存，例如：</p>
+<ol>
+<li>指针 (Pointers): 允许你直接读写任意内存地址。</li>
+<li>手动内存管理 (new&#x2F;delete): 让你精确控制对象的生命周期和它在内存中的位置。</li>
+<li>内联汇编 (Inline Assembly): 允许你在 C++ 代码中直接嵌入汇编语言指令。<br>  虽然现代 C++ 提供了更安全的替代品（如智能指针 std::unique_ptr），但它从不移除这些底层工具，以备你需要榨干最后一点性能时使用。）</li>
+</ol>
+</li>
+<li><p><strong>Don’t sacrifice performance except as a last resort</strong></p>
+<p>  （性能是 C++ 的立身之本。 C++ 的设计目标始终是使其成为运行速度最快的语言之一（与 C 和 Fortran 并驾齐驱）。这条原则意味着，C++ 的许多高级特性被设计为 “零成本抽象” (Zero-Cost Abstractions)。<br>  零成本抽象：指那些让你代码更易读、更安全的高级功能，但在编译后，它们产生的机器码和你自己手写底层 C 风格代码一样高效，不会增加任何运行时的开销。例子：</p>
+<ol>
+<li>模板 (Templates): std::vector<int> 在编译时就会生成一个专门处理 int 的类，其访问效率与 C 语言的 int[] 数组完全相同。</li>
+<li>std::sort 算法: 编译器通常会将其高度优化，运行速度往往比你自己随手写的快速排序更快。）</li>
+</ol>
+</li>
+<li><p><strong>Enforce safety at compile time whenever possible</strong></p>
+</li>
+</ul>
+<h2 id="Lecture-2-Types-and-Structs"><a href="#Lecture-2-Types-and-Structs" class="headerlink" title="Lecture 2: Types and Structs"></a>Lecture 2: Types and Structs</h2><p>*<br>    <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> d = “Hello”; <span class="comment">// const char* (a C string)</span></span><br></pre></td></tr></table></figure></p>
+<pre><code>这样用 `auto` 会被 compiler 推断为一个常量字符串的指针，若想修改字符串中的元素，会有报错。
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:!g++ auto.cpp -o auto -Wall -Wshadow -Wextra -g -lm -O2 -std=c++11 &amp;&amp; ./auto</span><br><span class="line">auto.cpp:15:10: error: read-only variable is not assignable </span><br></pre></td></tr></table></figure>
+</code></pre>
+<ul>
+<li><code>auto</code> is a keyword that tells the <strong>compiler</strong> to deduce the type of a variable, it should be used <strong>when the type is obvious or very cumbersome to write out</strong>.</li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>CS106L Notes</p><p><a href="http://example.com/2025/10/28/CS106L-Notes/">http://example.com/2025/10/28/CS106L-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Zylll</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-10-28</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-10-29</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/C/">C++</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/10/28/2024%E4%BC%A0%E6%99%BA%E6%9D%AF%E5%88%9D%E8%B5%9B/"><span class="level-item">2024年传智杯A组初赛</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="https://s1.imagehub.cc/images/2024/11/12/bf93f90311c802220474e9bf8ff8b3d4.jpg" alt="Zylll"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Zylll</p><p class="is-size-6 is-block">yllzhanggg@gmail.com</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Xi&#039;an Jiaotong University</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">38</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">12</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">22</p></a></div></div></nav></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Lecture-1-Welcome"><span class="level-left"><span class="level-item">1</span><span class="level-item">Lecture 1: Welcome</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Design-Philosophy-of-C"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">Design Philosophy of C++</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Lecture-2-Types-and-Structs"><span class="level-left"><span class="level-item">2</span><span class="level-item">Lecture 2: Types and Structs</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Zylll&#039;s Blog</a><p class="is-size-7"><span>&copy; 2025 Zylll</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">做一名万物学徒。</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mhchem.min.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
