@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>党日活动：保密宣传教育</title>
+    
+    <!-- 1. 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                        'fadeIn': 'fadeIn 1s ease-out forwards',
+                        'slideInLeft': 'slideInLeft 0.8s ease-out forwards',
+                        'slideInRight': 'slideInRight 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideInLeft: { '0%': { opacity: '0', transform: 'translateX(-20px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
+                        slideInRight: { '0%': { opacity: '0', transform: 'translateX(20px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 2. 引入 React 和 Babel -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- 3. 样式微调 -->
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #e5e7eb; }
+        #root { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- SVG 图标组件 (无需 Lucide 库，直接内嵌 svg 以保证兼容性) ---
+        const IconWrapper = ({ children, className, size = 24, ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>{children}</svg>
+        );
+        const Shield = (p) => <IconWrapper {...p}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></IconWrapper>;
+        const AlertTriangle = (p) => <IconWrapper {...p}><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></IconWrapper>;
+        const Cpu = (p) => <IconWrapper {...p}><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1V4M15 1V4M9 20V23M15 20V23M20 9H23M20 14H23M1 9H4M1 14H4"/></IconWrapper>;
+        const ChevronRight = (p) => <IconWrapper {...p}><polyline points="9 18 15 12 9 6"/></IconWrapper>;
+        const ChevronLeft = (p) => <IconWrapper {...p}><polyline points="15 18 9 12 15 6"/></IconWrapper>;
+        const Target = (p) => <IconWrapper {...p}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></IconWrapper>;
+        const Code = (p) => <IconWrapper {...p}><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></IconWrapper>;
+        const Gavel = (p) => <IconWrapper {...p}><path d="m14 13-7.5 7.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L11 10l-5-5 1.5-1.5L19 15l-1.5 1.5Z"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/></IconWrapper>;
+        const CheckCircle = (p) => <IconWrapper {...p}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></IconWrapper>;
+        const Search = (p) => <IconWrapper {...p}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></IconWrapper>;
+        const Lock = (p) => <IconWrapper {...p}><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></IconWrapper>;
+        const Server = (p) => <IconWrapper {...p}><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></IconWrapper>;
+        const Wifi = (p) => <IconWrapper {...p}><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></IconWrapper>;
+
+        // --- 数据 ---
+        const slides = [
+            {
+                id: 1, type: 'cover',
+                title: '增强忧患意识 切实守好保密阵地',
+                subtitle: '保密宣传教育主题党日活动',
+                organizer: '电信学部计算机学院 2025 级专硕第二党支部',
+                date: '2025年11月',
+                icon: <Shield size={80} className="text-yellow-400" />
+            },
+            {
+                id: 2, type: 'agenda',
+                title: '活动流程',
+                items: [
+                    { id: '01', text: '形势与法规：新保密法与国家安全' },
+                    { id: '02', text: '惊心案例：发生在我们身边的泄密' },
+                    { id: '03', text: '硬核防范：计算机专业的“技术关”' },
+                    { id: '04', text: '避坑指南：网络间谍惯用伎俩' },
+                    { id: '05', text: '实战演练：保密知识问答' }
+                ]
+            },
+            {
+                id: 3, type: 'content', title: '一、形势与法规：总体国家安全观', layout: 'split',
+                content: {
+                    left: (
+                        <div className="space-y-6">
+                            <div className="bg-red-50 p-5 rounded-lg border-l-4 border-red-600 shadow-sm">
+                                <h3 className="font-bold text-xl text-red-800 mb-2 flex items-center"><Gavel className="mr-2" size={24}/> 2024年新修订《保密法》重点</h3>
+                                <ul className="list-disc list-inside text-gray-700 space-y-2 mt-3">
+                                    <li><strong className="text-red-700">科技含量提升：</strong>明确鼓励保密科技产品的研发，强调“技防”的重要性。</li>
+                                    <li><strong className="text-red-700">网络保密管理：</strong>针对数据化、网络化特点，完善了管理制度。</li>
+                                    <li><strong className="text-red-700">定密解密规范：</strong>精准定密，及时解密。</li>
+                                </ul>
+                            </div>
+                            <div className="p-4 bg-white rounded-lg border border-gray-200"><h4 className="font-bold text-gray-800 mb-2">当前严峻形势：</h4><p className="text-gray-600 text-sm leading-relaxed">境外间谍情报机构对我渗透窃密活动呈现<span className="font-bold text-red-600">“多元化、技术化、年轻化”</span>趋势。</p></div>
+                        </div>
+                    ),
+                    right: (
+                        <div className="flex flex-col items-center justify-center h-full bg-gray-100 rounded-xl p-6 relative overflow-hidden">
+                            <div className="absolute top-0 left-0 w-full h-2 bg-red-600"></div>
+                            <Target size={80} className="text-red-500 mb-6 animate-pulse" />
+                            <h3 className="text-2xl font-bold text-gray-800 mb-4">保密工作的“三期叠加”</h3>
+                            <div className="space-y-4 w-full max-w-sm">
+                                <div className="bg-white p-3 rounded shadow flex items-center"><span className="bg-red-100 text-red-800 font-bold px-2 py-1 rounded mr-3">01</span><span className="text-gray-700">转型升级期</span></div>
+                                <div className="bg-white p-3 rounded shadow flex items-center"><span className="bg-red-100 text-red-800 font-bold px-2 py-1 rounded mr-3">02</span><span className="text-gray-700">矛盾凸显期</span></div>
+                                <div className="bg-white p-3 rounded shadow flex items-center"><span className="bg-red-100 text-red-800 font-bold px-2 py-1 rounded mr-3">03</span><span className="text-gray-700">战略机遇期</span></div>
+                            </div>
+                        </div>
+                    )
+                }
+            },
+            {
+                id: 4, type: 'content', title: '二、惊心案例：代码里的秘密', subtitle: '前车之鉴：因为无知，他们付出了惨痛代价', layout: 'cards',
+                cards: [
+                    { icon: <Code className="text-blue-600" size={36} />, title: "大疆源代码泄露案", tag: "商业机密", desc: "员工将代码上传GitHub公有库，造成公司百万损失，获刑半年。" },
+                    { icon: <Wifi className="text-purple-600" size={36} />, title: "“枪王”网上泄密案", tag: "军工机密", desc: "军迷为炫技在论坛发布战机涉密文章，构成故意泄露国家秘密罪。" },
+                    { icon: <Search className="text-orange-500" size={36} />, title: "“兼职调研”陷阱", tag: "间谍策反", desc: "大学生受“高薪”诱惑拍摄军港，不知不觉沦为间谍工具。" }
+                ]
+            },
+            {
+                id: 5, type: 'content', title: '三、硬核防范：计算机人的修养', subtitle: '技术本身中立，但使用技术的人必须有底线', layout: 'grid',
+                items: [
+                    { title: 'Git 使用规范', desc: '严禁上传密码/Key至公有库；善用 .gitignore。', icon: <Code /> },
+                    { title: 'AI 辅助科研', desc: '严禁将涉密代码、数据投喂给云端大模型。', icon: <Cpu /> },
+                    { title: '云笔记/网盘', desc: '严禁在云服务中存储“内部”、“秘密”级文件。', icon: <Server /> },
+                    { title: '内网穿透风险', desc: '严禁私自搭建 FRP、Ngrok 等穿透服务。', icon: <Lock /> }
+                ]
+            },
+            {
+                id: 6, type: 'list', title: '四、避坑指南：识别网络间谍',
+                content: [
+                    { title: "网络求职/兼职陷阱", detail: "只需拍照、无需坐班、报酬丰厚。", warn: "天下没有免费的午餐" },
+                    { title: "学术交流陷阱", detail: "打着“海外学术机构”旗号索要数据、论文初稿。", warn: "核实对方身份背景" },
+                    { title: "情感/交友陷阱", detail: "网络上突然出现的“完美恋人”打听实验室情况。", warn: "不轻信网络陌生人" }
+                ]
+            },
+            {
+                id: 7, type: 'quiz', title: '五、实战演练：保密自测',
+                questions: [
+                    { q: "为了方便回家继续工作，把涉密代码上传到GitHub私有仓库。", a: false, reason: "GitHub服务器在境外，严禁处理涉密信息。" },
+                    { q: "使用手机USB共享网络给涉密电脑下载资料。", a: false, reason: "属于“违规外联”，必须物理隔离。" },
+                    { q: "收到.exe后缀的会议邀请函附件。", a: false, reason: "典型的钓鱼邮件，切勿运行。" },
+                    { q: "发现同学在朋友圈晒涉密设备照片，立即提醒删除。", a: true, reason: "及时止损，防止泄密扩大。" }
+                ]
+            },
+            {
+                id: 8, type: 'conclusion', title: '结语与承诺', slogan: '保守机密，慎之又慎', content: '做安全的守护者，筑牢国家安全防线！', footer: '电信学部计算机学院2025级专硕第二党支部'
+            }
+        ];
+
+        // --- 逻辑 ---
+        const App = () => {
+            const [currentSlide, setCurrentSlide] = useState(0);
+            const nextSlide = () => currentSlide < slides.length - 1 && setCurrentSlide(c => c + 1);
+            const prevSlide = () => currentSlide > 0 && setCurrentSlide(c => c - 1);
+
+            useEffect(() => {
+                const h = (e) => {
+                    if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+                    if (e.key === 'ArrowLeft') prevSlide();
+                };
+                window.addEventListener('keydown', h);
+                return () => window.removeEventListener('keydown', h);
+            }, [currentSlide]);
+
+            const slide = slides[currentSlide];
+
+            const renderContent = () => {
+                switch(slide.type) {
+                    case 'cover': return (
+                        <div className="flex flex-col items-center justify-center h-full text-center animate-fadeIn">
+                            <div className="mb-8 p-6 bg-red-100 rounded-full shadow-lg border-4 border-yellow-500 animate-bounce-slow">{slide.icon}</div>
+                            <h1 className="text-4xl md:text-5xl font-bold text-red-900 mb-4 font-serif">{slide.title}</h1>
+                            <div className="w-32 h-2 bg-yellow-500 mb-6 rounded-full"></div>
+                            <h2 className="text-2xl text-gray-700 mb-12">{slide.subtitle}</h2>
+                            <div className="bg-red-900 text-white px-8 py-3 rounded-lg shadow-md"><p>{slide.organizer}</p><p className="text-sm mt-1 opacity-75">{slide.date}</p></div>
+                        </div>
+                    );
+                    case 'agenda': return (
+                        <div className="h-full flex flex-col justify-center px-12">
+                            <h2 className="text-4xl font-bold text-red-800 mb-10 border-b-2 border-yellow-500 pb-4 inline-block w-fit">{slide.title}</h2>
+                            <div className="grid grid-cols-1 gap-5">{slide.items.map((item, i) => (
+                                <div key={i} className="flex items-center bg-white p-5 rounded-xl shadow-sm border-l-8 border-red-700">
+                                    <span className="text-4xl font-black text-gray-200 mr-6 italic">0{i+1}</span><span className="text-xl font-medium text-gray-800">{item.text}</span>
+                                </div>
+                            ))}</div>
+                        </div>
+                    );
+                    case 'content':
+                        if(slide.layout === 'split') return (
+                            <div className="h-full px-8 pt-8 pb-12"><h2 className="text-3xl font-bold text-red-800 mb-8 flex items-center"><span className="bg-red-600 w-2 h-8 mr-3 rounded"></span>{slide.title}</h2><div className="grid grid-cols-2 gap-10 h-[80%] items-center"><div className="text-lg leading-relaxed animate-slideInLeft">{slide.content.left}</div><div className="animate-slideInRight h-full">{slide.content.right}</div></div></div>
+                        );
+                        if(slide.layout === 'cards') return (
+                            <div className="h-full px-8 pt-8"><div className="mb-6"><h2 className="text-3xl font-bold text-red-800 flex items-center"><span className="bg-red-600 w-2 h-8 mr-3 rounded"></span>{slide.title}</h2><p className="text-gray-500 mt-2 ml-5 text-lg">{slide.subtitle}</p></div><div className="grid grid-cols-3 gap-6 h-[65%]">{slide.cards.map((c, i) => (<div key={i} className="bg-white rounded-xl shadow-lg p-5 flex flex-col items-center text-center border-t-4 border-red-600 hover:bg-red-50 transition-colors"><div className="mb-3 p-3 bg-gray-100 rounded-full">{c.icon}</div><span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded mb-2 font-bold">{c.tag}</span><h3 className="text-lg font-bold text-gray-800 mb-2">{c.title}</h3><p className="text-gray-600 text-sm text-left">{c.desc}</p></div>))}</div></div>
+                        );
+                        if(slide.layout === 'grid') return (
+                             <div className="h-full px-8 pt-8"><div className="mb-8"><h2 className="text-3xl font-bold text-red-800 flex items-center"><span className="bg-red-600 w-2 h-8 mr-3 rounded"></span>{slide.title}</h2><p className="text-gray-500 mt-2 ml-5 text-lg">{slide.subtitle}</p></div><div className="grid grid-cols-2 gap-6 h-[65%]">{slide.items.map((item, i) => (<div key={i} className="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow p-6 flex items-start space-x-4 border border-gray-100"><div className="p-3 bg-red-100 text-red-600 rounded-lg shrink-0">{React.cloneElement(item.icon, {size:28})}</div><div><h3 className="text-lg font-bold text-gray-800 mb-1">{item.title}</h3><p className="text-gray-600 text-sm">{item.desc}</p></div></div>))}</div></div>
+                        );
+                        return null;
+                    case 'list': return (
+                        <div className="h-full px-10 pt-10"><h2 className="text-3xl font-bold text-red-800 mb-8 flex items-center"><span className="bg-red-600 w-2 h-8 mr-3 rounded"></span>{slide.title}</h2><div className="space-y-6">{slide.content.map((item, i) => (<div key={i} className="bg-white p-5 rounded-lg shadow border-l-4 border-yellow-500 flex flex-col md:flex-row md:items-center justify-between"><div className="flex-1"><h3 className="text-xl font-bold text-gray-800 mb-1 flex items-center"><AlertTriangle className="text-yellow-500 mr-2" size={20}/>{item.title}</h3><p className="text-gray-600 ml-7">{item.detail}</p></div><div className="mt-3 md:mt-0 md:ml-4 bg-red-50 text-red-700 px-4 py-2 rounded font-bold text-sm whitespace-nowrap">警惕：{item.warn}</div></div>))}</div></div>
+                    );
+                    case 'quiz': return (
+                         <div className="h-full px-12 flex flex-col justify-center"><h2 className="text-3xl font-bold text-red-800 mb-8 text-center flex items-center justify-center"><Search className="mr-3" />{slide.title}</h2><div className="grid grid-cols-1 gap-4 overflow-y-auto max-h-[70vh] p-2">{slide.questions.map((q, i) => <QuizCard key={i} question={q} index={i} />)}</div></div>
+                    );
+                    case 'conclusion': return (
+                        <div className="h-full flex flex-col items-center justify-center text-center bg-gradient-to-b from-red-900 to-red-800 text-white rounded-2xl relative overflow-hidden"><div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-yellow-400 via-transparent to-transparent"></div><div className="mb-8 p-6 bg-white/10 rounded-full backdrop-blur-sm"><CheckCircle size={80} className="text-yellow-400" /></div><h1 className="text-4xl md:text-5xl font-bold mb-8 tracking-wider font-serif text-yellow-400">{slide.slogan}</h1><p className="text-xl md:text-2xl max-w-3xl leading-relaxed opacity-90 font-light px-6">{slide.content}</p><div className="mt-16 border-t border-red-700 pt-6 w-1/2"><p className="text-sm text-red-200">{slide.footer}</p></div></div>
+                    );
+                    default: return <div>Missing</div>;
+                }
+            };
+
+            return (
+                <div className="w-full max-w-6xl aspect-video bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col relative">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-red-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-yellow-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+                    <div className="flex-1 relative z-10 p-8 overflow-hidden">{renderContent()}</div>
+                    <div className="h-16 bg-gray-50 border-t border-gray-200 flex items-center justify-between px-6 z-20">
+                        <div className="text-xs text-gray-400 font-medium flex items-center"><span className="w-2 h-2 bg-red-600 rounded-full mr-2"></span>2025级专硕第二党支部</div>
+                        <div className="flex items-center space-x-6">
+                            <button onClick={prevSlide} disabled={currentSlide===0} className={`p-2 rounded-full ${currentSlide===0?'text-gray-300':'text-red-700 hover:bg-red-100'}`}><ChevronLeft size={24}/></button>
+                            <span className="text-sm font-bold text-gray-600">{currentSlide+1}/{slides.length}</span>
+                            <button onClick={nextSlide} disabled={currentSlide===slides.length-1} className={`p-2 rounded-full ${currentSlide===slides.length-1?'text-gray-300':'text-red-700 hover:bg-red-100'}`}><ChevronRight size={24}/></button>
+                        </div>
+                        <div className="w-32 h-1 bg-gray-200 rounded-full overflow-hidden"><div className="h-full bg-red-600 transition-all duration-300" style={{width:`${((currentSlide+1)/slides.length)*100}%`}}></div></div>
+                    </div>
+                </div>
+            );
+        };
+
+        const QuizCard = ({ question, index }) => {
+            const [revealed, setRevealed] = useState(false);
+            return (
+                <div onClick={() => setRevealed(!revealed)} className={`cursor-pointer border-2 rounded-lg p-4 transition-all duration-300 flex justify-between items-center group ${revealed ? (question.a ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500') : 'bg-white border-gray-200 hover:border-red-300 hover:shadow-md'}`}>
+                    <div className="flex-1"><div className="flex items-start"><span className="bg-gray-200 text-gray-600 text-xs font-bold px-2 py-1 rounded mr-3 mt-1">Q{index + 1}</span><p className="font-medium text-gray-800 text-lg leading-snug">{question.q}</p></div><div className={`grid transition-all duration-300 ease-in-out ${revealed ? 'grid-rows-[1fr] opacity-100 mt-3' : 'grid-rows-[0fr] opacity-0'}`}><div className="overflow-hidden"><p className={`text-sm p-3 rounded ${question.a ? 'text-green-800 bg-green-100' : 'text-red-800 bg-red-100'}`}><span className="font-bold text-base mr-2">{question.a ? "✔ 正确" : "✘ 错误"}</span>{question.reason}</p></div></div></div><div className="ml-4 text-gray-400 shrink-0">{revealed ? (question.a ? <CheckCircle className="text-green-500" size={28}/> : <AlertTriangle className="text-red-500" size={28}/>) : <div className="text-sm bg-gray-100 px-4 py-2 rounded-full group-hover:bg-red-100 group-hover:text-red-600 transition-colors">点击揭晓</div>}</div>
+                </div>
+            )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
